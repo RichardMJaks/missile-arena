@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bg8hih3ywao6x"]
+[gd_scene load_steps=21 format=3 uid="uid://bg8hih3ywao6x"]
 
 [ext_resource type="Script" uid="uid://h07cdxehyacc" path="res://missile/explosion.gd" id="1_a4u27"]
 [ext_resource type="AudioStream" uid="uid://drlo6r13e15wb" path="res://explosion.wav" id="2_e8yy6"]
@@ -66,14 +66,14 @@ scale_max = 0.15
 scale_curve = SubResource("CurveTexture_3nxos")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fj03e"]
-radius = 4.0
+radius = 3.0
 
 [sub_resource type="Animation" id="Animation_a4u27"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D:scale")
+tracks/0/path = NodePath("KillShape:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -130,6 +130,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("KnockbackArea:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("KnockbackArea/Sprite2D:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_uka03"]
 resource_name = "explosion"
@@ -137,7 +161,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D:scale")
+tracks/0/path = NodePath("KillShape:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -156,7 +180,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.100188, 0.903479, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(1e-05, 1e-05), Vector2(0.13, 0.13), Vector2(0.145, 0.145), Vector2(1e-05, 1e-05)]
+"values": [Vector2(1e-05, 1e-05), Vector2(0.07, 0.07), Vector2(0.08, 0.08), Vector2(1e-05, 1e-05)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -196,6 +220,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("KnockbackArea:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.202165),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("KnockbackArea/Sprite2D:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.202165),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e8yy6"]
 _data = {
@@ -208,11 +256,28 @@ random_pitch = 1.05
 streams_count = 1
 stream_0/stream = ExtResource("2_e8yy6")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_e8yy6"]
+radius = 12.0
+
+[sub_resource type="Gradient" id="Gradient_e8yy6"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.487013, 0.649351, 0.818182, 0.896104)
+colors = PackedColorArray(0.909804, 0.364706, 0.458824, 0, 0.909804, 0.364706, 0.458824, 0.258824, 0.909804, 0.364706, 0.458824, 1, 0.909804, 0.364706, 0.458824, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3nxos"]
+gradient = SubResource("Gradient_e8yy6")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [node name="Explosion" type="Area2D"]
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 script = ExtResource("1_a4u27")
+force = 100.0
 
 [node name="Main Area" type="Sprite2D" parent="."]
 scale = Vector2(0.095, 0.095)
@@ -233,9 +298,10 @@ one_shot = true
 explosiveness = 0.66
 process_material = SubResource("ParticleProcessMaterial_j1a7c")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="KillShape" type="CollisionShape2D" parent="."]
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_fj03e")
+debug_color = Color(0.988235, 0, 0, 0.419608)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -247,4 +313,18 @@ autoplay = "explosion"
 stream = SubResource("AudioStreamRandomizer_3nxos")
 bus = &"Explosion"
 
+[node name="KnockbackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockbackArea"]
+shape = SubResource("CircleShape2D_e8yy6")
+debug_color = Color(0.631373, 0.529412, 0, 0.254902)
+
+[node name="Sprite2D" type="Sprite2D" parent="KnockbackArea"]
+scale = Vector2(0.9, 0.9)
+texture = SubResource("GradientTexture2D_3nxos")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="KnockbackArea" to="." method="_on_knockback_area_body_entered"]
