@@ -7,12 +7,6 @@
 interpolation_mode = 1
 colors = PackedColorArray(0.909804, 0.364706, 0.458824, 1, 0.91, 0.364, 0.455, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_a4u27"]
-gradient = SubResource("Gradient_uka03")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
-
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_uka03"]
 gradient = SubResource("Gradient_uka03")
 width = 16
@@ -68,6 +62,12 @@ scale_curve = SubResource("CurveTexture_3nxos")
 [sub_resource type="CircleShape2D" id="CircleShape2D_fj03e"]
 radius = 3.0
 
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a4u27"]
+gradient = SubResource("Gradient_uka03")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [sub_resource type="Animation" id="Animation_a4u27"]
 length = 0.001
 tracks/0/type = "value"
@@ -85,7 +85,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Main Area:scale")
+tracks/1/path = NodePath("KillShape/Main Area:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -154,6 +154,18 @@ tracks/6/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("KnockbackArea:monitoring")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_uka03"]
 resource_name = "explosion"
@@ -165,19 +177,19 @@ tracks/0/path = NodePath("KillShape:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0983987),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.0983987, 0.90063, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(1e-05, 1e-05), Vector2(1, 1)]
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1.05, 1.05), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Main Area:scale")
+tracks/1/enabled = false
+tracks/1/path = NodePath("KillShape/Main Area:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.100188, 0.903479, 1),
+"times": PackedFloat32Array(0, 0.100188, 0.9, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(1e-05, 1e-05), Vector2(0.07, 0.07), Vector2(0.08, 0.08), Vector2(1e-05, 1e-05)]
@@ -244,6 +256,18 @@ tracks/6/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("KnockbackArea:monitoring")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.202165),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e8yy6"]
 _data = {
@@ -261,13 +285,11 @@ radius = 12.0
 
 [sub_resource type="Gradient" id="Gradient_e8yy6"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0.487013, 0.649351, 0.818182, 0.896104)
-colors = PackedColorArray(0.909804, 0.364706, 0.458824, 0, 0.909804, 0.364706, 0.458824, 0.258824, 0.909804, 0.364706, 0.458824, 1, 0.909804, 0.364706, 0.458824, 0)
+offsets = PackedFloat32Array(0, 0.545455, 0.694805, 0.798701, 0.896104)
+colors = PackedColorArray(0.909804, 0.364706, 0.458824, 0, 0.909804, 0.364706, 0.458824, 0.258824, 0.909804, 0.364706, 0.458824, 0.560784, 0.909804, 0.364706, 0.458824, 0.113725, 0.909804, 0.364706, 0.458824, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3nxos"]
 gradient = SubResource("Gradient_e8yy6")
-width = 32
-height = 32
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
@@ -278,10 +300,6 @@ collision_mask = 2
 monitorable = false
 script = ExtResource("1_a4u27")
 force = 100.0
-
-[node name="Main Area" type="Sprite2D" parent="."]
-scale = Vector2(0.095, 0.095)
-texture = SubResource("GradientTexture2D_a4u27")
 
 [node name="RoundParticles" type="GPUParticles2D" parent="."]
 amount = 16
@@ -303,6 +321,10 @@ scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_fj03e")
 debug_color = Color(0.988235, 0, 0, 0.419608)
 
+[node name="Main Area" type="Sprite2D" parent="KillShape"]
+scale = Vector2(0.095, 0.095)
+texture = SubResource("GradientTexture2D_a4u27")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_e8yy6")
@@ -323,7 +345,7 @@ shape = SubResource("CircleShape2D_e8yy6")
 debug_color = Color(0.631373, 0.529412, 0, 0.254902)
 
 [node name="Sprite2D" type="Sprite2D" parent="KnockbackArea"]
-scale = Vector2(0.9, 0.9)
+scale = Vector2(0.475, 0.475)
 texture = SubResource("GradientTexture2D_3nxos")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

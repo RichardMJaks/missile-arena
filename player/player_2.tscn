@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuqfrwye2xfhy"]
+
+[ext_resource type="PackedScene" uid="uid://bblmvhg54lcc3" path="res://player/player.tscn" id="1_u55yq"]
+
+[sub_resource type="Gradient" id="Gradient_rkbax"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.505882, 0.823529, 0.780392, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c056v"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_rkbax")
+width = 4
+height = 4
+
+[node name="Player2" instance=ExtResource("1_u55yq")]
+player_suffix = "1"
+
+[node name="Sprite" parent="." index="0"]
+self_modulate = Color(0.81467, 0.82, 0.5002, 1)
+
+[node name="DeathParticles" parent="." index="4"]
+texture = SubResource("GradientTexture2D_c056v")

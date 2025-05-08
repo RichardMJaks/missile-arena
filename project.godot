@@ -26,6 +26,10 @@ window/size/viewport_height=324
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/shaker/plugin.cfg")
+
 [input]
 
 m_left_0={

@@ -3,9 +3,12 @@ extends Camera2D
 @export var player_1: CharacterBody2D
 @export var player_2: CharacterBody2D
 
+@export var shaker: Shaker
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.death_happened.connect(_zoom_to_dead)
+	Global.shot.connect(shake)
+	Global.explosion.connect(shake_expl)
 	
 
 func _zoom_to_dead(player: int) -> void:
@@ -48,5 +51,13 @@ func _zoom_to_dead(player: int) -> void:
 		)
 	)
 
+func shake() -> void:
+	shaker.min_value = 1
+	shaker.max_value = 1.5
+	shaker.start(0.1)
 
+func shake_expl() -> void:
+	shaker.min_value = 2
+	shaker.max_value = 3
+	shaker.start(0.2)
 	

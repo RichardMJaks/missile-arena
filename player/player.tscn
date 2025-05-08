@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bblmvhg54lcc3"]
+[gd_scene load_steps=54 format=3 uid="uid://bblmvhg54lcc3"]
 
 [ext_resource type="Script" uid="uid://d04t1y0ahnj1u" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://bonke2yu1vqin" path="res://missile/rocket.tscn" id="2_rkbax"]
@@ -11,6 +11,144 @@
 
 [sub_resource type="QuadMesh" id="QuadMesh_kqu6x"]
 size = Vector2(2, 2)
+
+[sub_resource type="Gradient" id="Gradient_y162k"]
+interpolation_mode = 1
+colors = PackedColorArray(0.909804, 0.364706, 0.458824, 1, 0.91, 0.364, 0.455, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rgyib"]
+gradient = SubResource("Gradient_y162k")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hg6s5"]
+gradient = SubResource("Gradient_y162k")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Curve" id="Curve_8t03j"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2ieo8"]
+curve = SubResource("Curve_8t03j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ebec5"]
+lifetime_randomness = 0.6
+particle_flag_disable_z = true
+initial_velocity_min = 2.0
+initial_velocity_max = 15.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.09
+scale_curve = SubResource("CurveTexture_2ieo8")
+
+[sub_resource type="Curve" id="Curve_rgyib"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hg6s5"]
+curve = SubResource("Curve_rgyib")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8t03j"]
+lifetime_randomness = 0.6
+particle_flag_disable_z = true
+spread = 90.0
+initial_velocity_min = 2.0
+initial_velocity_max = 15.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.18
+scale_curve = SubResource("CurveTexture_hg6s5")
+
+[sub_resource type="Animation" id="Animation_rgyib"]
+resource_name = "shoot"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0500939, 0.0966096),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.375, 0), Vector2(-0.755, 0), Vector2(0.375, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeaponReadyParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../Shoot:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_hg6s5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.375, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeaponReadyParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../Shoot:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8t03j"]
+_data = {
+&"RESET": SubResource("Animation_hg6s5"),
+&"shoot": SubResource("Animation_rgyib")
+}
 
 [sub_resource type="Animation" id="Animation_rkbax"]
 length = 0.001
@@ -183,7 +321,7 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("Step:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
@@ -352,7 +490,7 @@ random_pitch = 1.2
 streams_count = 1
 stream_0/stream = ExtResource("6_g6k8r")
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("weapon_pivot", "shoot_point", "shot_timer", "rocket_visual", "sprite", "death_particles", "shoot_audio", "jump_audio", "missile_ready_audio", "death_sound", "anim_player", "anim_tree")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("weapon_pivot", "shoot_point", "shot_timer", "rocket_visual", "sprite", "death_particles", "weapon_ready_particles", "shoot_particles", "weapon_anim", "shoot_audio", "jump_audio", "missile_ready_audio", "death_sound", "anim_player", "anim_tree")]
 collision_layer = 2
 script = ExtResource("1_oul6g")
 move_speed = 20.0
@@ -363,9 +501,12 @@ weapon_pivot = NodePath("WeaponPivotTransform")
 shoot_point = NodePath("Sprite/WeaponPivot/Weapon/ShotPoint")
 missile = ExtResource("2_rkbax")
 shot_timer = NodePath("RocketTimer")
-rocket_visual = NodePath("Sprite/WeaponPivot/Rocket")
+rocket_visual = NodePath("Sprite/WeaponPivot/FireballTransformLocation")
 sprite = NodePath("Sprite")
 death_particles = NodePath("DeathParticles")
+weapon_ready_particles = NodePath("Sprite/WeaponPivot/WeaponReadyParticles")
+shoot_particles = NodePath("Sprite/WeaponPivot/ShootParticles")
+weapon_anim = NodePath("Sprite/WeaponPivot/AnimationPlayer")
 shoot_audio = NodePath("Shoot")
 jump_audio = NodePath("Jump")
 missile_ready_audio = NodePath("Readymissile")
@@ -374,7 +515,7 @@ anim_player = NodePath("AnimationPlayer")
 anim_tree = NodePath("AnimationTree")
 
 [node name="Sprite" type="MeshInstance2D" parent="."]
-self_modulate = Color(0.505882, 0.823529, 0.780392, 1)
+self_modulate = Color(0.5002, 0.77736, 0.82, 1)
 position = Vector2(-2.98023e-08, 2.98023e-08)
 mesh = SubResource("QuadMesh_kqu6x")
 
@@ -383,17 +524,50 @@ position = Vector2(0, 0.0599078)
 scale = Vector2(1.20482, 0.921659)
 
 [node name="Rocket" type="Polygon2D" parent="Sprite/WeaponPivot"]
+visible = false
 position = Vector2(1.15, 0)
-color = Color(0.709804, 0.729412, 0.815686, 1)
+color = Color(0.909804, 0.364706, 0.458824, 1)
 polygon = PackedVector2Array(0.15, -0.15, 1.10781, -0.414062, 1.77969, 0, 1.12344, 0.429688, 0.15, 0.15)
+
+[node name="FireballTransformLocation" type="Marker2D" parent="Sprite/WeaponPivot"]
+position = Vector2(1.15, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite/WeaponPivot/FireballTransformLocation"]
+position = Vector2(1.135, 0)
+scale = Vector2(0.015, 0.015)
+texture = SubResource("GradientTexture2D_rgyib")
 
 [node name="Weapon" type="Polygon2D" parent="Sprite/WeaponPivot"]
 position = Vector2(0.375, 0)
 color = Color(0.254902, 0.403922, 0.533333, 1)
-polygon = PackedVector2Array(0, 0.2, 1.3, 0.2, 1.3, 0.5, 1.7, 0.5, 1.7, -0.5, 1.3, -0.5, 1.3, -0.2, 0, -0.2)
+polygon = PackedVector2Array(0, 0.1, 1.3, 0.15, 1.7, 0.5, 1.7, 0.3, 1.5, 0, 1.7, -0.3, 1.7, -0.5, 1.3, -0.15, 0, -0.1)
 
 [node name="ShotPoint" type="Marker2D" parent="Sprite/WeaponPivot/Weapon"]
 position = Vector2(1.7, 0)
+
+[node name="WeaponReadyParticles" type="GPUParticles2D" parent="Sprite/WeaponPivot"]
+position = Vector2(2.095, 0)
+emitting = false
+texture = SubResource("GradientTexture2D_hg6s5")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ebec5")
+
+[node name="ShootParticles" type="GPUParticles2D" parent="Sprite/WeaponPivot"]
+position = Vector2(2.095, 0)
+emitting = false
+amount = 4
+texture = SubResource("GradientTexture2D_hg6s5")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_8t03j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite/WeaponPivot"]
+libraries = {
+&"": SubResource("AnimationLibrary_8t03j")
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 audio_max_polyphony = 1

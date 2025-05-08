@@ -1,9 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgrchinrnklrd"]
+[gd_scene load_steps=15 format=3 uid="uid://bgrchinrnklrd"]
 
 [ext_resource type="PackedScene" uid="uid://bblmvhg54lcc3" path="res://player/player.tscn" id="1_1uwqr"]
 [ext_resource type="FontFile" uid="uid://d1nn377guyjmf" path="res://C&C Red Alert [INET].ttf" id="2_lvjdj"]
 [ext_resource type="Script" uid="uid://dkecmb51pqrik" path="res://camera_2d.gd" id="2_rdi1l"]
+[ext_resource type="Script" uid="uid://cnlc1ehpy2pos" path="res://addons/shaker/shaker.gd" id="3_e0a3d"]
 [ext_resource type="Script" uid="uid://b0ln31d55yt15" path="res://label.gd" id="4_txpwr"]
+[ext_resource type="Script" uid="uid://dkbibh2202uw7" path="res://kill_shape.gd" id="5_16g7q"]
+[ext_resource type="PackedScene" uid="uid://cuqfrwye2xfhy" path="res://player/player_2.tscn" id="6_obyai"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lvjdj"]
 
@@ -13,17 +16,14 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvjdj"]
 
-[sub_resource type="Gradient" id="Gradient_rkbax"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.505882, 0.823529, 0.780392, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_txpwr"]
-resource_local_to_scene = true
-gradient = SubResource("Gradient_rkbax")
-width = 4
-height = 4
+[sub_resource type="Curve" id="Curve_e0a3d"]
+_data = [Vector2(0, 1), 0.0, -2.78962, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1uwqr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obyai"]
+size = Vector2(6, 78)
 
 [node name="Debug" type="Node2D"]
 
@@ -78,22 +78,21 @@ metadata/_edit_lock_ = true
 [node name="Player" parent="." instance=ExtResource("1_1uwqr")]
 position = Vector2(88.4268, 82.9557)
 
-[node name="Player2" parent="." instance=ExtResource("1_1uwqr")]
-position = Vector2(118.488, 92.7805)
-player_suffix = "1"
-
-[node name="Sprite" parent="Player2" index="0"]
-self_modulate = Color(0.53751, 0.82, 0.5002, 1)
-
-[node name="DeathParticles" parent="Player2" index="4"]
-texture = SubResource("GradientTexture2D_txpwr")
-
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player_1", "player_2")]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player_1", "player_2", "shaker")]
 position = Vector2(105, 84)
 zoom = Vector2(9, 9)
 script = ExtResource("2_rdi1l")
 player_1 = NodePath("../Player")
 player_2 = NodePath("../Player2")
+shaker = NodePath("Node")
+
+[node name="Node" type="Node" parent="Camera2D" node_paths=PackedStringArray("target_node")]
+script = ExtResource("3_e0a3d")
+target_node = NodePath("..")
+target_property = &"offset"
+min_value = 0.1
+max_value = 0.2
+fall_off = SubResource("Curve_e0a3d")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2(424.988, 228.122)
@@ -130,4 +129,57 @@ script = ExtResource("4_txpwr")
 
 [node name="Node" type="Node" parent="."]
 
-[editable path="Player2"]
+[node name="KillShape" type="Area2D" parent="."]
+position = Vector2(62, 87)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("5_16g7q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillShape"]
+shape = SubResource("RectangleShape2D_obyai")
+debug_color = Color(0.972711, 0, 0.439129, 0.42)
+
+[node name="KillShape3" type="Area2D" parent="."]
+position = Vector2(104, 48)
+rotation = -1.57079
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("5_16g7q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillShape3"]
+shape = SubResource("RectangleShape2D_obyai")
+debug_color = Color(0.972711, 0, 0.439129, 0.42)
+
+[node name="KillShape4" type="Area2D" parent="."]
+position = Vector2(104, 116)
+rotation = -1.57079
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("5_16g7q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillShape4"]
+shape = SubResource("RectangleShape2D_obyai")
+debug_color = Color(0.972711, 0, 0.439129, 0.42)
+
+[node name="KillShape2" type="Area2D" parent="."]
+position = Vector2(146, 86)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("5_16g7q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillShape2"]
+shape = SubResource("RectangleShape2D_obyai")
+debug_color = Color(0.972711, 0, 0.439129, 0.42)
+
+[node name="Player2" parent="." node_paths=PackedStringArray("rocket_visual") instance=ExtResource("6_obyai")]
+position = Vector2(117, 94)
+rocket_visual = NodePath("Sprite/WeaponPivot/Rocket")
+
+[connection signal="body_entered" from="KillShape" to="KillShape" method="_on_body_entered"]
+[connection signal="body_entered" from="KillShape3" to="KillShape3" method="_on_body_entered"]
+[connection signal="body_entered" from="KillShape4" to="KillShape4" method="_on_body_entered"]
+[connection signal="body_entered" from="KillShape2" to="KillShape2" method="_on_body_entered"]

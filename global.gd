@@ -4,6 +4,8 @@ var p1_score: int = 0
 var p2_score: int = 0
 
 signal death_happened(player: int)
+signal shot()
+signal explosion()
 
 func death(player: int) -> void:
 	if player == 0:

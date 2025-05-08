@@ -14,9 +14,12 @@ extends CharacterBody2D
 @export var shoot_point: Marker2D
 @export var missile: PackedScene
 @export var shot_timer: Timer
-@export var rocket_visual: Polygon2D
+@export var rocket_visual: Node2D 
 @export var sprite: MeshInstance2D
 @export var death_particles: GPUParticles2D
+@export var weapon_ready_particles: GPUParticles2D
+@export var shoot_particles: GPUParticles2D
+@export var weapon_anim: AnimationPlayer
 
 @export var shoot_audio: AudioStreamPlayer
 @export var jump_audio: AudioStreamPlayer
@@ -131,7 +134,8 @@ func _shoot() -> void:
 	shot_timer.start()
 	can_shoot = false
 	rocket_visual.visible = false
-	shoot_audio.play()
+	weapon_anim.play("shoot")
+	Global.shot.emit()
 
 
 func _input(event: InputEvent) -> void:
@@ -149,7 +153,8 @@ func _on_rocket_timer_timeout() -> void:
 	tween.tween_property(rocket_visual, "position:x", 1.15, 0.2)\
 	.set_trans(Tween.TRANS_ELASTIC)\
 	.set_ease(Tween.EASE_OUT)
-	missile_ready_audio.play()
+	weapon_ready_particles.emitting = true
+	#missile_ready_audio.play()
 	
 func die() -> void:
 	Global.death(int(player_suffix))
