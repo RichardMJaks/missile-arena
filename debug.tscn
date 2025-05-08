@@ -1,0 +1,133 @@
+[gd_scene load_steps=12 format=3 uid="uid://bgrchinrnklrd"]
+
+[ext_resource type="PackedScene" uid="uid://bblmvhg54lcc3" path="res://player/player.tscn" id="1_1uwqr"]
+[ext_resource type="FontFile" uid="uid://d1nn377guyjmf" path="res://C&C Red Alert [INET].ttf" id="2_lvjdj"]
+[ext_resource type="Script" uid="uid://dkecmb51pqrik" path="res://camera_2d.gd" id="2_rdi1l"]
+[ext_resource type="Script" uid="uid://b0ln31d55yt15" path="res://label.gd" id="4_txpwr"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lvjdj"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_rdi1l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txpwr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvjdj"]
+
+[sub_resource type="Gradient" id="Gradient_rkbax"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.505882, 0.823529, 0.780392, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_txpwr"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_rkbax")
+width = 4
+height = 4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1uwqr"]
+
+[node name="Debug" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(103.495, 97.1766)
+scale = Vector2(2.725, 0.095)
+collision_mask = 0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D"]
+modulate = Color(0.45098, 0.537255, 0.682353, 1)
+material = SubResource("CanvasItemMaterial_lvjdj")
+scale = Vector2(20, 20)
+mesh = SubResource("QuadMesh_rdi1l")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_txpwr")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(117.773, 85.7678)
+scale = Vector2(0.685, 0.1)
+collision_mask = 0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D3"]
+modulate = Color(0.45098, 0.537255, 0.682353, 1)
+material = SubResource("CanvasItemMaterial_lvjdj")
+scale = Vector2(20, 20)
+mesh = SubResource("QuadMesh_rdi1l")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("RectangleShape2D_lvjdj")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(89.5304, 85.8601)
+scale = Vector2(0.685, 0.1)
+collision_mask = 0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D4"]
+modulate = Color(0.45098, 0.537255, 0.682353, 1)
+material = SubResource("CanvasItemMaterial_lvjdj")
+scale = Vector2(20, 20)
+mesh = SubResource("QuadMesh_rdi1l")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource("RectangleShape2D_lvjdj")
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("1_1uwqr")]
+position = Vector2(88.4268, 82.9557)
+
+[node name="Player2" parent="." instance=ExtResource("1_1uwqr")]
+position = Vector2(118.488, 92.7805)
+player_suffix = "1"
+
+[node name="Sprite" parent="Player2" index="0"]
+self_modulate = Color(0.53751, 0.82, 0.5002, 1)
+
+[node name="DeathParticles" parent="Player2" index="4"]
+texture = SubResource("GradientTexture2D_txpwr")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player_1", "player_2")]
+position = Vector2(105, 84)
+zoom = Vector2(9, 9)
+script = ExtResource("2_rdi1l")
+player_1 = NodePath("../Player")
+player_2 = NodePath("../Player2")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(424.988, 228.122)
+collision_layer = 3
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("RectangleShape2D_1uwqr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/CenterContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_lvjdj")
+theme_override_font_sizes/font_size = 51
+text = "1 -1"
+script = ExtResource("4_txpwr")
+
+[node name="Node" type="Node" parent="."]
+
+[editable path="Player2"]
