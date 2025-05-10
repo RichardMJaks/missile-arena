@@ -86,7 +86,6 @@ texture = SubResource("GradientTexture2D_y162k")
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
 visible = false
 position = Vector2(-44.0931, -0.457287)
-scale = Vector2(1, 1)
 texture = SubResource("GradientTexture2D_du2og")
 
 [node name="MissileCollision" type="Area2D" parent="."]

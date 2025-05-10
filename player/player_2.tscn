@@ -18,5 +18,9 @@ player_suffix = "1"
 [node name="Sprite" parent="." index="0"]
 self_modulate = Color(0.81467, 0.82, 0.5002, 1)
 
+[node name="WeaponPivot" parent="Sprite" index="0"]
+position = Vector2(0, 0.0599078)
+scale = Vector2(1.20482, 0.921659)
+
 [node name="DeathParticles" parent="." index="4"]
 texture = SubResource("GradientTexture2D_c056v")

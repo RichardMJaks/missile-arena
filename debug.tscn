@@ -175,9 +175,8 @@ script = ExtResource("5_16g7q")
 shape = SubResource("RectangleShape2D_obyai")
 debug_color = Color(0.972711, 0, 0.439129, 0.42)
 
-[node name="Player2" parent="." node_paths=PackedStringArray("rocket_visual") instance=ExtResource("6_obyai")]
+[node name="Player2" parent="." instance=ExtResource("6_obyai")]
 position = Vector2(117, 94)
-rocket_visual = NodePath("Sprite/WeaponPivot/Rocket")
 
 [connection signal="body_entered" from="KillShape" to="KillShape" method="_on_body_entered"]
 [connection signal="body_entered" from="KillShape3" to="KillShape3" method="_on_body_entered"]

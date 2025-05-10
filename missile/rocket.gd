@@ -18,6 +18,9 @@ func _physics_process(_delta: float) -> void:
 
 func _on_collision(body: Node2D) -> void:
 	print(body.name)
+	if body is Player:
+		print("Kill by direct hit")
+		body.die()
 	_explode()
 
 func _explode() -> void:

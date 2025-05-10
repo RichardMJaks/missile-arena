@@ -239,7 +239,7 @@ tracks/5/path = NodePath("KnockbackArea:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.202165),
+"times": PackedFloat32Array(0.1, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(1, 1)]
@@ -251,7 +251,7 @@ tracks/6/path = NodePath("KnockbackArea/Sprite2D:modulate")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.202165),
+"times": PackedFloat32Array(0.1, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -263,10 +263,10 @@ tracks/7/path = NodePath("KnockbackArea:monitoring")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.202165),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [true, false]
+"values": [false, true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e8yy6"]
@@ -299,7 +299,6 @@ collision_layer = 0
 collision_mask = 2
 monitorable = false
 script = ExtResource("1_a4u27")
-force = 100.0
 
 [node name="RoundParticles" type="GPUParticles2D" parent="."]
 amount = 16

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @export var player_suffix: String = "0"
 
@@ -9,6 +10,8 @@ extends CharacterBody2D
 @export var fall_speed: float = 0
 @export var fall_acceleration_time: float = 0.1
 @export var jump_height: float = 1
+
+@export var knockback_velocity = 10
 
 @export var weapon_pivot: Node2D
 @export var shoot_point: Marker2D
@@ -47,8 +50,8 @@ func _physics_process(delta: float) -> void:
 		var x = Input.get_joy_axis(int(player_suffix), JOY_AXIS_RIGHT_X)
 		var y = Input.get_joy_axis(int(player_suffix), JOY_AXIS_RIGHT_Y)
 		
-		x = smoothstep(0.01, 1, absf(x)) * sign(x)
-		y = smoothstep(0.01, 1, absf(y)) * sign(y)
+		x = smoothstep(0.1, 1, absf(x)) * sign(x)
+		y = smoothstep(0.1, 1, absf(y)) * sign(y)
 		
 		var look_dir = Vector2(x, y)
 		
@@ -136,6 +139,7 @@ func _shoot() -> void:
 	rocket_visual.visible = false
 	weapon_anim.play("shoot")
 	Global.shot.emit()
+	velocity -= Vector2.from_angle(weapon_pivot.rotation) * knockback_velocity
 
 
 func _input(event: InputEvent) -> void:
