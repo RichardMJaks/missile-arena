@@ -521,8 +521,7 @@ position = Vector2(-2.98023e-08, 2.98023e-08)
 mesh = SubResource("QuadMesh_kqu6x")
 
 [node name="WeaponPivot" type="Node2D" parent="Sprite"]
-position = Vector2(0, -0.298701)
-scale = Vector2(0.687285, 1.2987)
+position = Vector2(2.98023e-08, -2.98023e-08)
 
 [node name="Rocket" type="Polygon2D" parent="Sprite/WeaponPivot"]
 visible = false
